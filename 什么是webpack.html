@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>什么是webpack</title>
+</head>
+<body>
+    1.什么是webpack(3.X版本(3.5.6))(打包后混淆代码)
+   webpack=>模块打包机==>exports /module.exports
+它可以做的有.分析你的项目结构,找到JS模块,以及其他的一些浏览器
+不能直接运行的扩展语言,并将其转换和打包为合适的格式供浏览器使用
+    2.为什么使用webpack
+    (1)把JS,CSS,IMG等(模块)打包;减少请求;
+    3.安装webpack
+    还是通过npm下载webpack
+    1.npm init ==>package.json
+    2.安装webpack
+    ====>全局安装(不推荐=>原因=>框架更新太快)
+    npm i(install) -g webpack@(版本号)3.5.6
+
+    ====>局部安装(推荐)  --save-dev 开发的模式去使用
+    npm i(install) --save-dev webpack@(版本号)3.5.6
+
+    3.用终端命令实现 webpack 打包
+    node_modules\.bin\webpack(webpack模块)
+    app\main.js打包的文件(入口)
+    public\build_main.js输出的文件名(出口)
+    node_modules\.bin\webpack app\main.js public\build_main.js
+
+    安装好的文件指令翻译:
+
+    <!--Hash: b4448ca7aa707866e888-->
+    <!--散列:b4448ca7aa707866e888-->
+    <!--Version: webpack 3.5.6-->
+    <!--版本:webpack 3.5.6-->
+    <!--Time: 104ms-->
+    <!--时间:104毫秒-->
+    <!--Asset  Size  Chunks  Chunk Names-->
+    <!--资产   大小  大块    大块名称-->
+    <!--build_main.-->
+    <!--build_main。-->
+    <!--js 2.78 kB 0 [emitted] main-->
+    <!--j2.78 kB 0[发射]主要-->
+    <!--[0] ./app/main.-->
+    <!--[0]。/ app /主要。-->
+    <!--js 91 bytes {0} [built]-->
+    <!--js 91字节{0}[已构建]-->
+    <!--[1] ./app/filter_title.-->
+    <!--[1]。/ app / filter_title。-->
+    <!--js 143 bytes {0} [built]-->
+    <!--js 143字节{0}[已构建]-->
+    4.用终端操作终归是不好管理
+    所以:webpack提供了一个配置文件
+    名字叫做webpack.config.js(规定)==>这个里面配置入口与出口
+
+    然后直接使用node_modules\.bin\webpack  来进行打包 =>
+    他会收缩是否在webpack.config.js
+
+    那么node_modules\.bin\webpack =>
+    还是很长能不能简单好记一点呢!
+    在package.json中的script这个对象是一个自定义指令的位置
+    "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+    },
+    <!--不想用默认的指令的话加一个npm run (名字)-->
+    自定义指令简化命令实现打包
+    npm 直接key是有限制的
+    如果不是npm 自带的关键字的话,需要加==>npm run (key名字)
+
+
+    webpack的强大功能,调试更简单
+        source map
+        (打包之后的文件如果配置了source maps,可以看到依赖的模块代码
+            =>应该在webpack.config.js文件去配置)
+            四种模式 devtool:
+        "eval-source-map",(偏中小型)
+        使用eval打包源文件模块,在同一个文件中,生成一个干净完整的source map
+        但是对打包后输出的js文件的执行,具有性能和安全的隐患,
+        在开发阶段这是一个非常好的选项,在生产阶段一定不要使用!!!!
+        偏中小型eval-source-map是一个很好的选项,
+        注意:只应该开发阶段使用它,然后继续对上文新建的webpack.config.js,进行以下配置
+         <div>module.exports={
+             //开发工具
+             devtool: "eval-source-map",
+             //唯一的入口文件
+             entry:__dirname + '/app/main.js',
+             //打包之后的文件输出的位置
+             output:{
+             path:__dirname + '/public',
+             filename:'build_main.js',
+             }
+             };</div>
+
+        代码热更新  <=>  创建自己的开发测试服务器
+        webpack提供一个本地服务器,这个服务器基于node.js
+        不过这个模块需要下载,并且依赖yixia
+        npm i --save-dev webpack-dev-server
+        webpack-dev-server=>3.0以上版本=>webpack 4.0服务的
+
+</body>
+</html>
